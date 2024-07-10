@@ -22,12 +22,12 @@ const scene = new THREE.Scene()
 const parameters = {}
 parameters.count = 10000
 parameters.size = 0.001
-parameters.radius = 6
+parameters.radius = 1
 parameters.branches = 2
 parameters.spin = 0.7
-parameters.randomness = 0.10
+parameters.randomness = 0
 parameters.randomnessPower = 2.3
-parameters.insideColor = '#c77d48'
+parameters.insideColor = '#9c6cd3'
 parameters.outsideColor = '#9c6cd3'
 parameters.backgroundColor = '#191919'
 
@@ -72,7 +72,7 @@ const generateGalaxy = () =>
         const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
 
         positions[i3    ] = Math.cos(branchAngle) * radius
-        positions[i3 + 1] = 0
+        positions[i3 + 1] = 
         positions[i3 + 2] = Math.sin(branchAngle) * radius
     
         randomness[i3    ] = randomX
@@ -162,7 +162,7 @@ scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+controls.enableRotate = false
 
 /**
  * Renderer
@@ -188,8 +188,9 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     // Update material
-    camera.position.y = Math.tan(elapsedTime * 0.05) * 20
-    material.uniforms.uTime.value = elapsedTime
+    // camera.position.y = (Math.tan(elapsedTime * 0.05) * 20)
+    // material.uniforms.uTime.value = (Math.tan(elapsedTime) * 0.5) / Math.sin(elapsedTime * 0.05)
+    material.uniforms.uTime.value = elapsedTime * (Math.tan(elapsedTime * 0.05)) 
 
     // Update controls
     controls.update()
